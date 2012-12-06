@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Demo: SVG with data</title>
+		<script src="http://d3js.org/d3.v2.js"></script>
+
+	</head>
+	<body>
+		<script type="text/javascript">
+			function numberWithCommas(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+
+			//Width and height
+			var w = 500;
+			var h = 50;
+
+			//Data
+			var dataset = [27000, 160, 17580, 42920, 10600, 5380, 7960, 11490, 45250, 9450, 21380, 13790, 37650, 0, 940, 0, 260];
+			var deptos = ["Burruyacu", "Capital", "Chicligasta", "Cruz Alta", "Famaillá", "Graneros", "J. B. Alberdi", "La Cocha", "Leales", "Lules", "Monteros", "Río Chico", "Simoca", "Tafi del Valle", "Tafí Viejo", "Trancas", "Yerba Buena"];
+
+			var max = 45250;
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", 600)
+						.attr("height", 400);
+
+			// dataset.sort(function(a,b){return b-a});
+			var rectangulos = svg.selectAll("rect")
+			    .data(dataset)
+			    .enter()
+			    .append("rect");
+
+			var textos = svg.selectAll("text.textos")
+			    .data(deptos)
+			    .enter()
+			    .append("text");
+
+			var rotulos = svg.selectAll("text.rotulos")
+			    .data(dataset)
+			    .enter()
+			    .append("text");
+
+			textos.text( function(d) { return (d);} )
+				.attr("class", "textos")
+				.attr("x",0)
+				.attr("y", function(d, i) { return (i * 23) + 14; } );
+
+			rectangulos.attr("x", 100)
+				   .attr("y", function(d, i) { return (i * 23); } )
+				   .attr("rx", 3)
+				   .attr("ry", 3)
+				   .attr("width", function(d) { return (d * 200 / max);} )
+				   .attr("height",20)
+				   .attr("style","fill:rgb(128,128,128);stroke-width:1;stroke:rgb(0,0,0)");
+
+			rotulos.text( function(d) { return (numberWithCommas(d));} )
+				.attr("class", "rotulos")
+				.attr("color", "red")
+				.attr("x", function(d) { return (105 + (d * 200 / max));} )
+				.attr("y", function(d, i) { return (i * 23) + 14; } );
+
+		</script>
+	</body>
+</html>
