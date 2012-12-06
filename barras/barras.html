@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Demo: Simple bar chart</title>
+		<script src="http://d3js.org/d3.v2.js"></script>
+		<style type="text/css">
+
+			div.bar {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				margin-right: 2px;
+				background-color: teal;
+			}
+
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+			var dataset = [27000, 160, 17580, 42920, 10600, 5380, 7960, 11490, 45250, 9450, 21380, 13790, 37650, 0, 940, 0, 260];
+			var max = 45250;
+
+			d3.select("body").selectAll("div")
+				.data(dataset)
+				.enter()
+				.append("div")
+				.attr("class", "bar")
+				.style("width", function(d) {
+					var barHeight = d * 200 / max;
+					return barHeight + "px";
+				});
+
+		</script>
+	</body>
+</html>
