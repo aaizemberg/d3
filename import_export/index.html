@@ -5,7 +5,6 @@
 		<title>Import & Export by Country (USDA)</title>
       <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 		<style type="text/css">
-			/* No style rules here yet */
 		</style>
 	</head>
 	<body>
@@ -13,24 +12,24 @@
 			var w = 500;
 			var h = 500;
 
-			//Data
 			var dataset = [
-              { country:'Argentina', valor: 10 },
-              { country:'Chile'    , valor: 20 },
-              { country:'Peru'     , valor: 100 }
+              { country:'Argentina' , valor:11 },
+              { country:'Chile'     , valor:22 },
+              { country:'Paraguay'  , valor:33 }
             ];
 
-			//Create SVG element
 			var svg = d3.select("body")
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
 
+          /*
           svg.append("rect")
             .attr("width", w)
             .attr("height", h)
             .attr("fill","white")
             .attr("stroke","gray");
+          */
 
           svg.append("line")
             .attr("x1", w / 2)
@@ -40,31 +39,62 @@
             .attr("stroke","gray")
             .attr("stroke-width","0.1");
 
-          var text = svg.selectAll("text")
+          svg.append("line")
+            .attr("x1", 50 + w / 2)
+            .attr("y1", 0)
+            .attr("x2", 50 + w / 2)
+            .attr("y2", w)
+            .attr("stroke","gray")
+            .attr("stroke-width","0.1");
+
+          svg.append("line")
+            .attr("x1", w / 2 - 50 )
+            .attr("y1", 0)
+            .attr("x2", w / 2 - 50 )
+            .attr("y2", w)
+            .attr("stroke","gray")
+            .attr("stroke-width","0.1");
+
+
+          var text = svg.selectAll("text.paises")
                          .data(dataset)
                          .enter()
                          .append("text");
 
-          text.text( function(d) { return d.country; })
-              .attr("x", 10)
+          text.text( function(d) { return d.country })
+              .attr("class", "paises")
+              .attr("x", w / 2)
               .attr("y", function(d,i) {return (30 + (i * 25))} )
-          //  .attr("text-anchor", "middle")
+              .attr("text-anchor", "middle")
               .attr("font-family","sans-serif")
               .attr("font-size", "20px")
               .attr("fill", "gray");
+
+		  var textos = svg.selectAll("text.textos")
+			    .data(dataset)
+			    .enter()
+			    .append("text");
+
+          textos.text( function(d) { return (d.valor);} )
+            	.attr("class", "textos")
+				.attr("x", w/2 + 50)
+				.attr("y", function(d, i) { return (i * 25) + 30; } )
+                .attr("font-family","sans-serif")
+                .attr("font-size", "20px")
+                .attr("fill", "gray");
 
           var rect = svg.selectAll("rect")
                          .data(dataset)
                          .enter()
                          .append("rect");
 
-          rect.attr("x" , 120)
-              .attr("y" , function(d,i) { return 15+i*25 } )
-              .attr("width" , function(d,i) { return d.valor } )
-              .attr("height" , 20)
+          rect.attr("x" , 10)
+              .attr("y" , function(d,i) { return 12 + i*25 } )
               .attr("fill","gray")
-              .attr("stroke","gray");
+              .attr("stroke","gray")
+              .attr("width" , function(d) { return d.valor } )
+              .attr("height" , 20);
 
-		</script>
+      </script>
 	</body>
 </html>
