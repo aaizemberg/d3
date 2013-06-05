@@ -23,13 +23,11 @@
 						.attr("width", w)
 						.attr("height", h);
 
-          /*
           svg.append("rect")
             .attr("width", w)
             .attr("height", h)
             .attr("fill","white")
             .attr("stroke","gray");
-          */
 
           svg.append("line")
             .attr("x1", w / 2)
@@ -56,6 +54,8 @@
             .attr("stroke-width","0.1");
 
 
+			// Paises
+			//
           var text = svg.selectAll("text.paises")
                          .data(dataset)
                          .enter()
@@ -70,6 +70,9 @@
               .attr("font-size", "20px")
               .attr("fill", "gray");
 
+
+			// Imprimo los valores
+			//
 		  var textos = svg.selectAll("text.textos")
 			    .data(dataset)
 			    .enter()
@@ -83,13 +86,14 @@
                 .attr("font-size", "20px")
                 .attr("fill", "gray");
 
-          var rect = svg.selectAll("rect")
+          var rect = svg.selectAll("rect.imp")
                          .data(dataset)
                          .enter()
                          .append("rect");
 
           rect.attr("x" , 10)
               .attr("y" , function(d,i) { return 12 + i*25 } )
+              .attr("class", "imp")
               .attr("fill","gray")
               .attr("stroke","gray")
               .attr("width" , function(d) { return d.valor } )
