@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>circulos</title>
+
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
+  <script>
+	var w = 500;
+	var h = 500;
+
+    function load() {
+      var puntos = [];
+
+      function Point() {
+        var x;
+        var y;
+      }
+
+      for (var i = 0; i < 50; i++) {
+        var x = Math.round(Math.random() * w);
+        var y = Math.round(Math.random() * h);
+        var punto = new Point();
+        punto.x = x;
+        punto.y = y;
+        puntos.push(punto);
+      }
+
+      var svg = d3.select("div")
+		.append("svg")
+		.attr("width", w)
+		.attr("height", h);
+
+      svg.append("rect")
+         .attr("width", w)
+         .attr("height", h)
+         .attr("fill","white")
+         .attr("stroke","gray");
+
+      var circle = svg.selectAll("circle")
+		.data(puntos)
+		.enter()
+		.append("circle");
+
+      circle.style("fill", "rgba(255,0,0,0.5)")
+            .attr("cx", function(d) { return d.x;  } )
+            .attr( "cy", function(d) { return d.y;  } )
+            .attr( "r" , function(d,i) { return i+10; } );
+    }
+
+	function center_r10() {
+	  var svg = d3.select("div");
+	  var circle = svg.selectAll("circle");
+	  circle.style("fill", "steelblue");
+	  circle.transition().duration(1000).delay(100).attr("cy", w/2 )
+	                                               .attr("r" , 10 );
+	}
+
+  </script>
+
+  </head>
+
+<body onload="load()">
+  <div id="vis"></div>
+  <button type="button" onclick="center_r10()">acción</button>
+</body>
+</html>
