@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<meta charset=utf-8 />
+<title>geocoding</title>
+</head>
+<body>
+
+  <script>
+    var data;
+    var lat;
+    var lon;
+    var address = "Balcarce 50, Caba, Argentina";
+
+    d3.json("http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=false", function(error, json) {
+      if (error) return console.warn(error);
+
+      data = json; // data es una estructura JSON con el resultado de la geocodificación
+
+      lat = data.results[0].geometry.location.lat;
+      lon = data.results[0].geometry.location.lng;
+      alert("lat=" + lat + "  lon=" + lon);
+
+      // "http://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lon + "&zoom=14&size=400x400&sensor=false"
+      // "http://maps.googleapis.com/maps/api/staticmap?center=" + lat + "," + lon + "&amp;zoom=14&amp;size=400x400&amp;sensor=false"
+
+    });
+  </script>
+
+</body>
+</html>

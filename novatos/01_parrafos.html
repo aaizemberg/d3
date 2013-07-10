@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <meta charset=utf-8 />
+  <title>Agregando parrafos desde D3</title>
+</head>
+<body>
+
+  <div id="viz"></div>
+  
+  <script type="text/javascript">
+
+    datos = ['hola','mundo',33,44,55,100];
+
+    laViz = d3.select("#viz");
+
+    laViz.selectAll("p")
+         .data(datos)
+         .enter()
+         .append("p")
+         .text( function(d) { return d; } );
+
+  </script>
+
+  <p>function(d) y function(d,i)</p>
+  <p>Diferencia entre select y selectAll</p>
+  <p>capturando todos los DIVs</p>
+  <p>Seleccionado por id o por class</p>
+  
+</body>
+</html>
