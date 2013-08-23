@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
+  <meta charset="utf-8" />
+  <title>Argentina y sus proyecciones</title>
+
+  </head>
+<body>
+
+<h1></h1>
+
+<!-- slider de jqueryUI -->
+<div id="slider">
+  <script>
+    $(function() {
+
+      $( "#slider" ).slider({
+        min: 1,
+        max: 7,
+        value: 3,
+        step: 1,
+        slide: function( event, ui ) {
+          d3.select("body").select("img").attr("src", "ar" + ui.value + ".png");
+          d3.select("body").select("h1").text("faja " + ui.value);
+        }
+      });
+
+      d3.select("body").select("h1").text("faja " + $( "#slider" ).slider( "value" ) );
+      d3.select("body").select("img").attr("src", "ar" + $( "#slider" ).slider( "value" ) + ".png");
+
+    });
+  </script>
+</div>
+
+<br>
+
+<img src="" width="375px" height="446px" border="1" />
+
+  </body>
+</html>
