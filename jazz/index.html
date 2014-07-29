@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jazz standards</title>
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
+  <style>
+    body {
+      margin: 10;
+      font-family: "Arial", "Helvetica Neue","Helvetica",sans-serif;
+    }
+  </style>
+
+
+</head>
+<body>
+
+<h1>jazz standards</h1>
+
+<script>
+  var data = ["autumn leaves", "some day my prince will come", "misty", "all of me"];
+  d3.select("body").selectAll("p").data(data).enter().append("p").style("width", "300px").text(function(d) { return d; })
+  	.append("audio").attr("controls", "")
+  		.append("source")
+  			.attr("src", function(d) { return d + ".ogg"; })
+  			.attr("type", "audio/ogg");
+</script>
+
+</body>
+</html>
