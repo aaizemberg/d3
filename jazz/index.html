@@ -20,7 +20,7 @@
 <h1>jazz standards</h1>
 
 <script>
-  var data = ["autumn leaves", "some day my prince will come", "misty", "all of me", "desafinado"];
+  var data = ["autumn leaves", "some day my prince will come", "misty", "all of me", "desafinado", "my funny valentine"];
   d3.select("body").selectAll("p").data(data).enter().append("p").style("width", "300px").text(function(d) { return d; })
   	.append("audio").attr("controls", "")
   		.append("source")
