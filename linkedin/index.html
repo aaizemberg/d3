@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+  <meta charset="utf-8">
+  <title>don't lie</title>
+</head>
+<body>
+<script>
+  var data = [474, 726];
+
+  var r = d3.scale.sqrt()
+            .domain([0, 726])
+            .range([0, 726/20]);  
+
+  var svg = d3.select("body")
+             .append("svg")
+             .attr("width", 400)
+             .attr("height", 100);
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("r", r )
+    .attr("cx", function(d,i) { return (i+1) * 100; } )
+    .attr("cy", 50);
+
+  svg.selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("x", function(d,i) { return (i+1) * 100; } )
+    .attr("y", 53)
+    .attr("fill","white")
+    .attr("font-family","Helvetica,Arial,sans-serif")
+    .attr("text-anchor","middle")
+    .text(function(d,i) { return d; })
+  
+</script>
+</body>
+</html>
