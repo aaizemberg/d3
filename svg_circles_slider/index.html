@@ -1,70 +1,53 @@
 <!doctype html>
-
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>d3 | svg | jQuery UI Slider</title>
-
-    <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
-
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css " />
-    <script src="http://code.jquery.com/jquery-1.8.2.js "></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js "></script>
-
-    <script>
-
-	function draw_n_circles( cant ) {
-		d3.select("svg").remove();
-
-		var svg = d3.select("#viz")
-					.append("svg")
-					.attr("width", 640)
-					.attr("height", 480);
-
-		svg.append("rect")
-			.style("stroke", "black")
-			.style("fill", "white")
-			.attr("x", 0)
-			.attr("y", 0)
-			.attr("width", 640)
-			.attr("height", 480);
-
-		for (var i=0; i < cant ; i++) {
-			x = Math.random() * 640;
-			y = Math.random() * 480;
-			r = Math.random() * 25;
-			col_stroke = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
-			col_fill   = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
-			svg.append("circle")
-				.style("stroke", col_stroke )
-				.style("fill", col_fill )
-				.style("stroke-width", 4)
-				.attr("r", r)
-				.attr("cx", x)
-				.attr("cy", y);
-		}
-	}
-
-
-    $(function() {
-        $( "#slider" ).slider({
-          min: 1,
-          max: 640,
-          value: 320,
-          change: function (event, ui) { draw_n_circles( ui.value ); }
-        });
-    });
-
-    $(document).ready(function () {
-        draw_n_circles( 320 );
-    });
-
-    </script>
+  <meta charset="utf-8" />
+  <title>d3.js | svg | html5 Slider</title>
+  <script src="http://d3js.org/d3.v3.js"></script>
 </head>
-
 <body>
   <p>move the slider, the script will draw between 1 to 640 circles</p>
-  <div id="slider" style="width: 640px;"></div>
+  <input type="range" id="slider" min="1" max="640">
   <div id="viz"></div>
+  
+  <script>
+  
+  function draw_n_circles( cant ) {
+  	d3.select("svg").remove();
+  	var svg = d3.select("#viz")
+		.append("svg")
+		.attr("width", 640)
+		.attr("height", 480);
+		
+	svg.append("rect")
+		.style("stroke", "black")
+		.style("fill", "white")
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", 640)
+		.attr("height", 480);
+
+	for (var i=0; i < cant ; i++) {
+		x = Math.random() * 640;
+		y = Math.random() * 480;
+		r = Math.random() * 25;
+		col_stroke = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
+		col_fill   = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
+		svg.append("circle")
+			.style("stroke", col_stroke )
+			.style("fill", col_fill )
+			.style("stroke-width", 2)
+			.attr("r", r)
+			.attr("cx", x)
+			.attr("cy", y);
+	}
+  }
+  
+  d3.select("input#slider").on("change", function() {
+  	draw_n_circles( this.value );
+  });
+  
+  draw_n_circles( 320 );
+</script>  
 </body>
 </html>
