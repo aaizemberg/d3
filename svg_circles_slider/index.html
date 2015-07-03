@@ -11,25 +11,27 @@
   <div id="viz"></div>
   
   <script>
-  
-  function draw_n_circles( cant ) {
-  	d3.select("svg").remove();
-  	var svg = d3.select("#viz")
+    var w = 640, h = 480;
+    var svg = d3.select("#viz")
 		.append("svg")
-		.attr("width", 640)
-		.attr("height", 480);
-		
-	svg.append("rect")
+		.attr("width", w)
+		.attr("height", h);
+    
+    svg.append("rect")
 		.style("stroke", "black")
 		.style("fill", "white")
 		.attr("x", 0)
 		.attr("y", 0)
-		.attr("width", 640)
-		.attr("height", 480);
+		.attr("width", w)
+		.attr("height", h);
 
-	for (var i=0; i < cant ; i++) {
-		x = Math.random() * 640;
-		y = Math.random() * 480;
+  
+function draw_n_circles( n ) {
+ d3.select("svg").selectAll("circle").data([]).exit().remove();
+		
+  for (var i=0; i < n ; i++) {
+		x = Math.random() * w;
+		y = Math.random() * h;
 		r = Math.random() * 25;
 		col_stroke = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
 		col_fill   = '#' + (Math.random()*255 | (Math.random()*255 << 8) | (Math.random()*255 << 16)).toString(16); // colorToHex
@@ -40,14 +42,13 @@
 			.attr("r", r)
 			.attr("cx", x)
 			.attr("cy", y);
-	}
   }
-  
+}
   d3.select("input#slider").on("change", function() {
   	draw_n_circles( this.value );
   });
   
-  draw_n_circles( 320 );
+    draw_n_circles( 320 );
 </script>  
 </body>
 </html>
