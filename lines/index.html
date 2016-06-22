@@ -26,7 +26,6 @@
   <li id="hc_1_8A" class="ui-state-default">hc 1 8A&nbsp;</li>
 </ul>
 <script>
-
 var data;
 
 function drawChart(donde, url) {
@@ -41,7 +40,6 @@ function visualizeit(donde, url) {
     for(i=0; i < data.length; i++) {
       valores.push( data[i].value );
     }
-
     var scale = d3.scale.cubehelix().domain([d3.min(valores),d3.max(valores)]);
     var svg = d3.select(donde).append("svg").attr("width",valores.length).attr("height",20);
 
@@ -52,7 +50,7 @@ function visualizeit(donde, url) {
      .attr("y2",19)
      .style("stroke-width","1")
      .style("stroke", function(d) {return scale(d.value);})
-     .append("title").text( function(d) {return d.date_time;});  
+     .append("title").text( function(d) {return d.date_time + " (" + d.value + ")";});  
 }
 
 drawChart("li#hc_3_1" ,'hc_3_1.csv');
