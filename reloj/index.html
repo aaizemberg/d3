@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>segundero</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+</head>
+<body>
+  
+<script>  
+var width  = 400, 
+    height = 400;
+
+function fixh(h,m) {
+  if (h >= 12) {
+    h = h-12;
+  }
+  return h + (m/60); // le agrego decimales de minutos 
+}
+
+var timer = setInterval(update, 1000);
+
+function update() {
+  d = new Date();
+  s = d.getSeconds(); // 0 .. 60
+  m = d.getMinutes(); // 0 .. 60
+  h = d.getHours();   // 0 .. 23
+  d3.select("line.s").attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escala(s) + "  )")
+  d3.select("line.m").attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escala(m) + "  )")
+  d3.select("line.h").attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escalaH(fixh(h,m)) + "  )")
+}
+
+var svg = d3.select("body").append("svg").attr("width",width).attr("height",height);
+var escala = d3.scaleLinear().domain([0,60]).range([0,360]);
+var escalaH = d3.scaleLinear().domain([0,12]).range([0,360]);
+
+var d = new Date();
+var s = d.getSeconds();
+var m = d.getMinutes();
+var h = d.getHours(); 
+svg.append("line")
+   .attr("class","h")
+   .attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escalaH(fixh(h,m)) + "  )")
+   .attr("y2",-1*(0.3*d3.min([width,height])))
+   .attr("stroke","red")
+   .attr("stroke-linecap","round")
+   .attr("stroke-width","4");
+
+svg.append("line")
+   .attr("class","m")
+   .attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escala(m) + "  )")
+   .attr("y2",-1*(0.4*d3.min([width,height])))
+   .attr("stroke","green")
+   .attr("stroke-linecap","round")
+   .attr("stroke-width","2");
+
+svg.append("line")
+   .attr("class","s")
+   .attr("transform", "translate(" + width/2 + " " + height/2 + ") rotate( " + escala(s) + "  )")
+   .attr("y2",-1*(0.5*d3.min([width,height])))
+   .attr("stroke","blue")
+   .attr("stroke-linecap","round")
+   .attr("stroke-width","1");
+
+horas = d3.range(12).map(function(d) { return d+1; });
+// imprimir las horas  
+</script>  
+  
+</body>
+</html>
