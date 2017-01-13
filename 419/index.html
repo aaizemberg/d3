@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Index</title>
+  <script src="//d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+
+<script>
+  var data = ['area-graph-gradient.html', 'area.html', 'axis-labels.html', 'bar.html', 'circle.html', 'dual-axes.html', 'dual-labels.html', 'filter-selection.html', 'grid.html', 'histogram.html', 'if-selection.html', 'input-double.html', 'input-number-text.html', 'input-radius.html', 'input-text-rotate-2.html', 'input-text-rotate.html', 'interactive-tree.html', 'interpolate.html', 'line-graph-gradient.html', 'multiple-lines.html', 'sankey-formatted-csv.html', 'sankey-formatted-json.html', 'sankey-formatted-names.html', 'scatterplot.html', 'shadow.html', 'show-hide.html', 'simple-axis-rotated-formatted.html', 'simple-axis-rotated.html', 'simple-graph.html', 'simple-graph-plus-table-plus-addins.html', 'simple-horizontal-tree-diagram.html', 'simple-scatterplot.html', 'simple-tooltips.html', 'simple-tooltips-link.html', 'simple-tooltips-link-multi.html', 'simple-vertical-tree-diagram.html', 'super-multi-colours.html', 'super-multi.html', 'super-multi-legend.html', 'super-multi-lines.html', 'transition-chaining.html', 'transition-circle.html', 'transition-easing-multiple.html', 'transition-loop.html', 'tree-from-csv.html', 'tree-from-external.html', 'tree-from-flat.html', 'tree-images.html', 'tree-styling.html', 'tree-symbol.html', 'xlink-rect-pointer-events.html'];
+  var ol = d3.select("body").append("ol");
+  ol.selectAll("li").data(data).enter()
+    .append("li")
+      .append("a")
+        .attr("href", function(d) {return d;} )
+        .text( function(d) {return d;} );
+</script>
+
+</body>
+</html>
