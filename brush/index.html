@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+
+  <title>scatterplot with d3-brush</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+
+  <style>
+    h1 {
+      font-family: 'Lato', sans-serif;
+    }
+    
+    div {
+      font-family: 'Merriweather', serif;
+    }
+
+    circle[class^="noselect"] {
+      fill: #999;
+    }
+    
+    circle[class^="selected"] {
+      fill: steelblue;
+    }
+    
+  </style>  
+</head>
+<body>
+  <h1>scatterplot with d3-brush</h1>
+
+  <div id="scatterplot"></div>
+  <div id="ids"></div>
+  
+<script>
+var width = 400;
+var height = 400;
+
+var data = d3.range(50).map(function(i) {
+  return {
+    id: i,
+    x: d3.randomUniform(0, width)(),
+    y: d3.randomUniform(0, height)()
+  };
+});  
+  
+var svg = d3.select("div#scatterplot").append("svg").attr("width",width).attr("height",height);
+
+svg.append("rect").attr("width",width).attr("height",height).style("fill","none").style("stroke","black");
+
+var brush = d3.brush()
+    .extent([[0, 0], [width, height]])
+    .on("start brush", brushed)
+    .on("end", brushended);
+
+var svgg = svg.append("g")
+    .attr("class", "brush")
+    .call(brush);
+
+function brushed() {
+  // console.log( d3.event.selection );
+  var s = d3.event.selection,
+      x0 = s[0][0],
+      y0 = s[0][1],
+      x1 = s[1][0],
+      y1 = s[1][1],
+      dx = s[1][0] - x0,
+      dy = s[1][1] - y0;
+  updateSelected(x0,y0,x1,y1);
+}
+
+function brushended() {
+  if (!d3.event.selection) {
+    unselectAll();
+  }
+  else {
+      var s = d3.event.selection,
+      x0 = s[0][0],
+      y0 = s[0][1],
+      x1 = s[1][0],
+      y1 = s[1][1];
+    updateSelected(x0,y0,x1,y1);
+  }
+}  
+  
+svgg.selectAll("circle").data(data).enter().append("circle")
+    .attr("class","noselect")
+    .attr("r",5)
+    .attr("cx",function(d){return d.x;})
+    .attr("cy",function(d){return d.y;})
+
+function updateSelected(x0,y0,x1,y1) {
+  var ids = [];
+  svgg.selectAll("circle")
+      .attr("class",
+        function(d) {
+          if (x0 < d.x & d.x < x1 & 
+              y0 < d.y & d.y < y1) {
+            ids.push(d.id);
+            return "selected"
+          }
+          else 
+            return "noselect"; 
+        } 
+      )
+  d3.select("div#ids").text("IDs selected: " + ids.toString());
+}
+
+function unselectAll() {
+  svgg.selectAll("circle").attr("class","noselect")
+  d3.select("div#ids").text("IDs selected: ");
+}  
+</script>    
+  
+</body>
+</html>
