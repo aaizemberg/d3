@@ -20,6 +20,7 @@
       font-family: 'Merriweather', serif;
     }
 
+    /* @Elijah_Meeks advice */ 
     circle {
       pointer-events: none;
     }
@@ -54,7 +55,7 @@ var data = d3.range(50).map(function(i) {
   
 var svg = d3.select("div#scatterplot").append("svg").attr("width",width).attr("height",height);
 
-svg.append("rect").attr("width",width).attr("height",height).style("fill","none").style("stroke","grey");
+svg.append("rect").attr("width",width).attr("height",height).style("fill","none").style("stroke","black");
 
 var brush = d3.brush()
     .extent([[0, 0], [width, height]])
@@ -99,7 +100,7 @@ function updateSelected(x0,y0,x1,y1) {
   gbrush.selectAll("circle")
       .attr("class",
         function(d) {
-          if ((x0 < d.x & d.x < x1) & (y0 < d.y & d.y < y1)) {
+          if ((x0 <= d.x && d.x <= x1) && (y0 <= d.y && d.y <= y1)) {
             ids.push(d.id);
             return "selected"
           }
