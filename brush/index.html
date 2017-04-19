@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
 
-  <style>
+  <style>    
     h1 {
       font-family: 'Lato', sans-serif;
     }
@@ -20,11 +20,15 @@
       font-family: 'Merriweather', serif;
     }
 
-    circle[class^="noselect"] {
+    circle {
+      pointer-events: none;
+    }
+
+    circle[class="noselect"] {
       fill: #999;
     }
     
-    circle[class^="selected"] {
+    circle[class="selected"] {
       fill: steelblue;
     }
     
@@ -50,26 +54,23 @@ var data = d3.range(50).map(function(i) {
   
 var svg = d3.select("div#scatterplot").append("svg").attr("width",width).attr("height",height);
 
-svg.append("rect").attr("width",width).attr("height",height).style("fill","none").style("stroke","black");
+svg.append("rect").attr("width",width).attr("height",height).style("fill","none").style("stroke","grey");
 
 var brush = d3.brush()
     .extent([[0, 0], [width, height]])
     .on("start brush", brushed)
     .on("end", brushended);
 
-var svgg = svg.append("g")
+var gbrush = svg.append("g")
     .attr("class", "brush")
     .call(brush);
 
 function brushed() {
-  // console.log( d3.event.selection );
   var s = d3.event.selection,
       x0 = s[0][0],
       y0 = s[0][1],
       x1 = s[1][0],
-      y1 = s[1][1],
-      dx = s[1][0] - x0,
-      dy = s[1][1] - y0;
+      y1 = s[1][1];
   updateSelected(x0,y0,x1,y1);
 }
 
@@ -87,7 +88,7 @@ function brushended() {
   }
 }  
   
-svgg.selectAll("circle").data(data).enter().append("circle")
+gbrush.selectAll("circle").data(data).enter().append("circle")
     .attr("class","noselect")
     .attr("r",5)
     .attr("cx",function(d){return d.x;})
@@ -95,11 +96,10 @@ svgg.selectAll("circle").data(data).enter().append("circle")
 
 function updateSelected(x0,y0,x1,y1) {
   var ids = [];
-  svgg.selectAll("circle")
+  gbrush.selectAll("circle")
       .attr("class",
         function(d) {
-          if (x0 < d.x & d.x < x1 & 
-              y0 < d.y & d.y < y1) {
+          if ((x0 < d.x & d.x < x1) & (y0 < d.y & d.y < y1)) {
             ids.push(d.id);
             return "selected"
           }
@@ -111,7 +111,7 @@ function updateSelected(x0,y0,x1,y1) {
 }
 
 function unselectAll() {
-  svgg.selectAll("circle").attr("class","noselect")
+  gbrush.selectAll("circle").attr("class","noselect")
   d3.select("div#ids").text("IDs selected: ");
 }  
 </script>    
