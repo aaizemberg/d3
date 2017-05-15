@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+
+<script>
+  var svg = d3.select("body").append("svg").attr("width",400).attr("height",400);
+  var data = d3.range(8);
+  var escala = d3.scaleLinear().domain(d3.extent(data)).range([0,180-(180/data.length)]);
+  
+  svg.selectAll("circle").data(data).enter()
+   .append("circle")
+   .attr("id",function(d,i) { return "id-"+i;} )
+   .attr("transform","translate(200 200)")
+   .attr("r",10)
+   .attr("fill","black");
+  
+  svg.selectAll("line").data(data).enter()
+   .append("line")
+   .attr("id",function(d,i) { return "id-"+i;} )
+   .attr("transform",function(d) { return "translate (200 200) rotate(" + escala(d) + ")"; } )
+   .attr("x1",-200)
+   .attr("y1",0)
+   .attr("x2",200)
+   .attr("y2",0)
+   .attr("stroke-width", 1 )
+   .attr("stroke", "rgb(0, 0, 0)" );
+
+//
+// implementar la funcion que mueva los 8 circulos que ya estan generados sobre las lineas
+//
+</script>  
+  
+</body>
+</html>
